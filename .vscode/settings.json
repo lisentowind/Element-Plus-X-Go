@@ -4,4 +4,18 @@
         "source.fixAll.eslint": "explicit",
         "source.organizeImports": "never"
     },
+    "cSpell.words": [
+        "assetserver",
+        "Colour",
+        "Frameless",
+        "jsonlee",
+        "Maximise",
+        "Maximised",
+        "qrcode",
+        "radash",
+        "Unmaximise",
+        "unplugin",
+        "wailsapp",
+        "wailsjs"
+    ],
 }
