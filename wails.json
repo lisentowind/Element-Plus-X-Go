@@ -1,0 +1,13 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "go-element-plus-x",
+  "outputfilename": "go-element-plus-x",
+  "frontend:install": "pnpm i",
+  "frontend:build": "pnpm run build",
+  "frontend:dev:watcher": "pnpm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "lisentowind",
+    "email": "shisanlailin@outlook.com"
+  }
+}

@@ -1,0 +1,32 @@
+::-webkit-scrollbar {
+    z-index: 1000;
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(0 0 0 / 6%);
+    border-radius: 3px;
+    box-shadow: inset 0 0 5px rgb(0 0 0 / 8%);
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    background: rgb(0 0 0 / 12%);
+    border-radius: 3px;
+    box-shadow: inset 0 0 10px rgb(0 0 0 / 20%);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(0 0 0 / 24%);
+    cursor: pointer;
+}
+
+body {
+    --custom-box-back-color: rgba(255, 255, 255, 0.6)
+}
+
+// dark theme
+body[theme='dark'] {
+    --custom-box-back-color: rgba(0, 0, 0, 0.8);
+}

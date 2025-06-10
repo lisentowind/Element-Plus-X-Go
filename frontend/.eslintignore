@@ -1,0 +1,6 @@
+/*.json
+/*.js
+dist
+node_modules
+ele_dist
+public

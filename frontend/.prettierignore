@@ -1,0 +1,9 @@
+/dist/*
+.local
+.output.js
+/node_modules/**
+/ele_dist/*
+/cypress/*
+
+**/*.svg
+**/*.sh
