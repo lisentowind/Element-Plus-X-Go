@@ -329,7 +329,7 @@
       flex-direction: column;
       justify-content: space-between;
       width: 100%;
-      height: fit-content;
+      height: calc(100vh - 90px);
       .thinking-chain-warp {
         margin-bottom: 12px;
       }

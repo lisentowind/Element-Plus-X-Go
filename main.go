@@ -18,7 +18,7 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:    "element-ai",
+		Title:    "element-ai-app",
 		MinWidth: 460,
 		Width:    1024,
 		Height:   768,

@@ -1,19 +1,13 @@
-# README
+## GO-Element-Plus-X-Demo
 
-## About
+#### frontend 前端项目
 
-This is the official Wails Vue-TS template.
+按照正常的前端项目流程进行即可
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+#### wails
 
-## Live Development
+wails dev 启动
+wails build 打包
+wails build -nsis 打包为nsis安装包
+wails build -nsis  -debug 打包为nsis安装包并打debug包
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
-
-## Building
-
-To build a redistributable, production mode package, use `wails build`.

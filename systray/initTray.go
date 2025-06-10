@@ -39,8 +39,8 @@ func showWindow() {
 
 func onReady() {
 	systray.SetIcon(getIcon())
-	systray.SetTitle("Tingfeng-AI")
-	systray.SetTooltip("Tingfeng-AI app")
+	systray.SetTitle("element-ai")
+	systray.SetTooltip("element-ai-app")
 
 	// 创建一个菜单项
 	mShow := systray.AddMenuItem("显示", "显示主窗口")

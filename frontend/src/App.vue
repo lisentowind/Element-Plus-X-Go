@@ -1,10 +1,27 @@
 <script lang="ts" setup>
   import { CloseTray } from 'wailsjs/go/main/App'
-  import { WindowHide } from 'wailsjs/runtime/runtime'
+  import { WindowHide, WindowMaximise, WindowIsMaximised, WindowUnmaximise } from 'wailsjs/runtime/runtime'
 
   const centerDialogVisible = ref(false)
   const quitApp = () => {
     centerDialogVisible.value = true
+  }
+
+  const isMax = ref(false)
+  const getNowIsMaximised = async () => {
+    const res = await WindowIsMaximised()
+    isMax.value = res
+  }
+
+  const changeWindowSize = async () => {
+    const res = await WindowIsMaximised()
+    if (res) {
+      WindowUnmaximise()
+      getNowIsMaximised()
+    } else {
+      WindowMaximise()
+      getNowIsMaximised()
+    }
   }
 
   const handelClose = () => {
@@ -13,6 +30,11 @@
       CloseTray()
     }, 300)
   }
+
+  onMounted(() => {
+    // 获取窗口状态
+    getNowIsMaximised()
+  })
 </script>
 
 <template>
@@ -20,10 +42,14 @@
     <!-- 替代原生软件的边框 实现拖拽 -->
     <div class="header">
       <el-space>
-        <el-button type="success" :size="'small'" circle @click="WindowHide"
+        <el-button type="success" circle plain @click="WindowHide"
           ><el-icon><Minus /></el-icon>
         </el-button>
-        <el-button type="danger" :size="'small'" circle @click="quitApp">
+        <el-button type="success" circle plain @click="changeWindowSize">
+          <el-icon v-if="isMax"><FullScreen /></el-icon>
+          <el-icon v-if="!isMax"><ZoomOut /></el-icon>
+        </el-button>
+        <el-button type="danger" circle plain @click="quitApp">
           <el-icon><Close /></el-icon>
         </el-button>
       </el-space>
@@ -48,10 +74,10 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    // background-color: var(--custom-box-back-color);
+    padding: 5px 0 10px 0;
     background-color: #ffffff;
-    backdrop-filter: blur(15px);
     box-sizing: border-box;
+    overflow: hidden;
 
     .body {
       width: 100%;
@@ -59,7 +85,7 @@
 
     .header {
       display: flex;
-      padding: 5px;
+      padding: 0 10px 5px 10px;
       justify-content: flex-start;
       align-items: center;
       --my-drag-region: drag;
