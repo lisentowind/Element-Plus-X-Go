@@ -30,8 +30,9 @@ func main() {
 			app,
 		},
 		Windows: &windows.Options{
-			WindowIsTranslucent:  true,
-			IsZoomControlEnabled: false,
+			WindowIsTranslucent:               true,
+			IsZoomControlEnabled:              false,
+			DisableFramelessWindowDecorations: true,
 		},
 		BackgroundColour: &options.RGBA{R: 255, G: 255, B: 255, A: 0},
 		Frameless:        true,

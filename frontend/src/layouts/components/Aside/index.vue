@@ -209,11 +209,11 @@
   // 基础样式
   .aside-container {
     position: absolute;
-    top: 0;
+    top: 10px;
     left: 0;
     z-index: 11;
     width: var(--sidebar-default-width);
-    height: 100%;
+    border-radius: var(--custom-border-radius-big);
     pointer-events: auto;
     background-color: var(--sidebar-background-color);
     border-right: 0.5px solid var(--s-color-border-tertiary, rgb(0 0 0 / 8%));
@@ -298,7 +298,7 @@
 
           // 会话列表高度-基础样式
           .conversations-wrap {
-            height: calc(100vh - 160px);
+            height: calc(100vh - 185px);
             .label {
               display: flex;
               align-items: center;
