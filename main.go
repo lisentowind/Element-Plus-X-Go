@@ -30,6 +30,7 @@ func main() {
 			app,
 		},
 		Windows: &windows.Options{
+			WebviewIsTransparent:              true,
 			WindowIsTranslucent:               true,
 			IsZoomControlEnabled:              false,
 			DisableFramelessWindowDecorations: true,

@@ -6,6 +6,7 @@
     "DirectiveBinding": true,
     "EffectScope": true,
     "ElMessage": true,
+    "ElMessageBox": true,
     "ExtractDefaultPropTypes": true,
     "ExtractPropTypes": true,
     "ExtractPublicPropTypes": true,
@@ -73,8 +74,5 @@
     "watchEffect": true,
     "watchPostEffect": true,
     "watchSyncEffect": true
-  }
-}
-chSyncEffect": true
   }
 }

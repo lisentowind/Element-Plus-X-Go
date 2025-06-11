@@ -1,10 +1,21 @@
 <script lang="ts" setup>
   import { CloseTray } from 'wailsjs/go/main/App'
-  import { WindowHide, WindowMaximise, WindowIsMaximised, WindowUnmaximise, WindowSetAlwaysOnTop } from 'wailsjs/runtime/runtime'
+  import {
+    WindowHide,
+    WindowMaximise,
+    WindowIsMaximised,
+    WindowUnmaximise,
+    WindowSetAlwaysOnTop,
+    WindowReloadApp
+  } from 'wailsjs/runtime/runtime'
 
   const centerDialogVisible = ref(false)
   const isMax = ref(false)
   const isTop = ref(false)
+
+  const messageConfig = reactive({
+    offset: 65
+  })
   const quitApp = () => {
     centerDialogVisible.value = true
   }
@@ -38,7 +49,9 @@
   const changeWindowFixed = () => {
     isTop.value = !isTop.value
     WindowSetAlwaysOnTop(isTop.value)
-    ElMessage.info(isTop.value ? '窗口已置顶' : '窗口已取消置顶')
+    ElMessage.info({
+      message: isTop.value ? '窗口已置顶' : '窗口已取消置顶'
+    })
   }
 
   onMounted(() => {
@@ -49,43 +62,60 @@
 </script>
 
 <template>
-  <div class="element-box">
-    <!-- 替代原生软件的边框 实现拖拽 -->
-    <div class="header">
-      <div class="left">
-        <div class="header-control-btn hide" @click="changeWindowFixed">
-          <SvgIcon v-if="!isTop" name="TablerPinned" />
-          <SvgIcon v-if="isTop" name="TablerPinnedOff" />
+  <el-config-provider :message="messageConfig">
+    <div class="element-box">
+      <!-- 替代原生软件的边框 实现拖拽 -->
+      <div class="header">
+        <div class="left-control">
+          <el-space>
+            <el-tooltip :content="isTop ? '取消固定' : '固定窗口'">
+              <div class="header-control-btn fixedWindow" @click="changeWindowFixed">
+                <SvgIcon v-if="!isTop" name="TablerPinned" />
+                <SvgIcon v-if="isTop" name="TablerPinnedOff" />
+              </div>
+            </el-tooltip>
+            <el-tooltip :content="'刷新'">
+              <div class="header-control-btn refresh" @click="WindowReloadApp">
+                <SvgIcon name="TablerRefresh" />
+              </div>
+            </el-tooltip>
+          </el-space>
+        </div>
+        <div class="right-contorl">
+          <el-space>
+            <el-tooltip :content="'最小化'">
+              <div class="header-control-btn hide" @click="WindowHide">
+                <SvgIcon name="TypcnMinus" />
+              </div>
+            </el-tooltip>
+            <el-tooltip :content="isMax ? '最小化' : '最大化'">
+              <div class="header-control-btn window" @click="changeWindowSize">
+                <SvgIcon v-if="!isMax" name="windowMax" />
+                <SvgIcon v-if="isMax" name="windowMini" />
+              </div>
+            </el-tooltip>
+            <el-tooltip :content="'关闭'">
+              <div class="header-control-btn close" @click="quitApp">
+                <SvgIcon name="EpCloseBold" />
+              </div>
+            </el-tooltip>
+          </el-space>
         </div>
       </div>
-      <div class="right">
-        <el-space>
-          <div class="header-control-btn hide" @click="WindowHide">
-            <SvgIcon name="TypcnMinus" />
-          </div>
-          <div class="header-control-btn window" @click="changeWindowSize">
-            <SvgIcon v-if="!isMax" name="windowMax" />
-            <SvgIcon v-if="isMax" name="UwindowMini" />
-          </div>
-          <div class="header-control-btn close" @click="quitApp">
-            <SvgIcon name="EpCloseBold" />
-          </div>
-        </el-space>
+      <div class="body">
+        <RouterView />
       </div>
     </div>
-    <div class="body">
-      <RouterView />
-    </div>
-  </div>
-  <el-dialog v-model="centerDialogVisible" width="500" align-center>
-    <span>确定要退出吗？</span>
-    <template #footer>
-      <div class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="handelClose"> 确认 </el-button>
-      </div>
-    </template>
-  </el-dialog>
+    <el-dialog v-model="centerDialogVisible" width="500" align-center>
+      <span>确定要退出吗？</span>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="centerDialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="handelClose"> 确认 </el-button>
+        </div>
+      </template>
+    </el-dialog>
+  </el-config-provider>
 </template>
 
 <style lang="less" scoped>
@@ -94,36 +124,39 @@
     height: 100vh;
     overflow: hidden;
     padding: 10px;
-    background-color: #ffffff;
+    background-color: var(--custom-window-back-color);
     box-sizing: border-box;
     overflow: hidden;
-    border-radius: var(--custom-border-radius-big);
+    border: 1px solid var(--custom-border-color);
+    border-radius: var(--custom-border-radius-mini);
 
     .body {
       width: 100%;
+      height: 100%;
     }
 
     .header {
-      position: relative;
-      display: flex;
       box-sizing: border-box;
       padding: 5px 10px;
       margin-bottom: 5px;
       height: 40px;
+      display: flex;
       justify-content: space-between;
       align-items: center;
       --my-drag-region: drag;
       -webkit-user-select: none;
       user-select: none;
+      transition: all 0.3s;
       box-shadow: var(--custom-box-shadow-min);
       border-radius: var(--custom-border-radius-big);
+      background-color: black;
       // background-color: transparent;
-      background: linear-gradient(270deg, #00e6778c, #00bfa678, #00e5ffa7, #2195f3b0, #661fff81, #00e6778c);
-      background-size: 600% 600%;
-      animation: rainbow 20s linear infinite;
+      // background: linear-gradient(270deg, #00e6778c, #00bfa678, #00e5ffa7, #2195f3b0, #661fff81, #00e6778c);
+      // background-size: 600% 600%;
+      // animation: rainbow 20s linear infinite;
 
-      .left,
-      .right {
+      .left-control,
+      .right-contorl {
         .header-control-btn {
           cursor: pointer;
           transition: all 0.3s;
@@ -134,11 +167,15 @@
           align-items: center;
           justify-content: center;
           border: 2px solid transparent;
-          color: rgb(0, 0, 0);
+          color: rgb(255, 255, 255);
+          transition: all 0.3s;
           &:hover {
-            border: 2px solid rgba(117, 117, 117, 0.784);
+            border: 2px solid white;
           }
         }
+
+        .fixedWindow,
+        .refresh,
         .hide {
           background-color: rgb(24, 191, 59);
         }
@@ -149,6 +186,16 @@
           background-color: rgb(251, 108, 100);
         }
       }
+
+      // .left-control {
+      //   width: 300px;
+      //   display: flex;
+      //   justify-content: flex-start;
+      //   align-items: center;
+      //   .header-control-btn {
+      //     margin: 0 8px 0 0;
+      //   }
+      // }
     }
   }
 

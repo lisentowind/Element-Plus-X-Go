@@ -213,6 +213,7 @@
     left: 0;
     z-index: 11;
     width: var(--sidebar-default-width);
+    height: 90%;
     border-radius: var(--custom-border-radius-big);
     pointer-events: auto;
     background-color: var(--sidebar-background-color);
@@ -298,7 +299,7 @@
 
           // 会话列表高度-基础样式
           .conversations-wrap {
-            height: calc(100vh - 185px);
+            height: calc(100vh - 205px);
             .label {
               display: flex;
               align-items: center;
@@ -316,7 +317,7 @@
     top: 54px;
     z-index: 22;
     height: auto;
-    max-height: calc(100% - 160px);
+    max-height: calc(100% - 180px);
     padding-bottom: 12px;
     overflow: hidden;
 
@@ -347,7 +348,7 @@
   .aside-container-collapse:hover,
   .aside-container-collapse.aside-container-suspended {
     height: auto;
-    max-height: calc(100% - 140px);
+    max-height: calc(100% - 180px);
     padding-bottom: 12px;
     overflow: hidden;
     pointer-events: auto;
