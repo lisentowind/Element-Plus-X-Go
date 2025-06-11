@@ -1,13 +1,14 @@
 <script lang="ts" setup>
   import { CloseTray } from 'wailsjs/go/main/App'
-  import { WindowHide, WindowMaximise, WindowIsMaximised, WindowUnmaximise } from 'wailsjs/runtime/runtime'
+  import { WindowHide, WindowMaximise, WindowIsMaximised, WindowUnmaximise, WindowSetAlwaysOnTop } from 'wailsjs/runtime/runtime'
 
   const centerDialogVisible = ref(false)
+  const isMax = ref(false)
+  const isTop = ref(false)
   const quitApp = () => {
     centerDialogVisible.value = true
   }
 
-  const isMax = ref(false)
   const getNowIsMaximised = async () => {
     const res = await WindowIsMaximised()
     isMax.value = res
@@ -34,9 +35,16 @@
     }, 300)
   }
 
+  const changeWindowFixed = () => {
+    isTop.value = !isTop.value
+    WindowSetAlwaysOnTop(isTop.value)
+    ElMessage.info(isTop.value ? '窗口已置顶' : '窗口已取消置顶')
+  }
+
   onMounted(() => {
     // 获取窗口状态
     getNowIsMaximised()
+    isTop.value = false
   })
 </script>
 
@@ -45,8 +53,9 @@
     <!-- 替代原生软件的边框 实现拖拽 -->
     <div class="header">
       <div class="left">
-        <div class="header-control-btn hide" @click="WindowHide">
-          <SvgIcon name="TypcnMinus" />
+        <div class="header-control-btn hide" @click="changeWindowFixed">
+          <SvgIcon v-if="!isTop" name="TablerPinned" />
+          <SvgIcon v-if="isTop" name="TablerPinnedOff" />
         </div>
       </div>
       <div class="right">
@@ -55,8 +64,8 @@
             <SvgIcon name="TypcnMinus" />
           </div>
           <div class="header-control-btn window" @click="changeWindowSize">
-            <SvgIcon v-if="!isMax" name="UilWindowMaximize" />
-            <SvgIcon v-if="isMax" name="UilWindowRestore" />
+            <SvgIcon v-if="!isMax" name="windowMax" />
+            <SvgIcon v-if="isMax" name="UwindowMini" />
           </div>
           <div class="header-control-btn close" @click="quitApp">
             <SvgIcon name="EpCloseBold" />
@@ -95,6 +104,7 @@
     }
 
     .header {
+      position: relative;
       display: flex;
       box-sizing: border-box;
       padding: 5px 10px;
@@ -123,24 +133,19 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 10px;
+          border: 2px solid transparent;
+          color: rgb(0, 0, 0);
           &:hover {
-            font-size: 14px;
-            font-weight: bold;
-            color: white;
+            border: 2px solid rgba(117, 117, 117, 0.784);
           }
         }
         .hide {
-          color: rgb(24, 191, 59);
           background-color: rgb(24, 191, 59);
         }
         .window {
-          color: rgb(255, 201, 5);
-          font-weight: bold;
           background-color: rgb(255, 201, 5);
         }
         .close {
-          color: rgb(251, 108, 100);
           background-color: rgb(251, 108, 100);
         }
       }
