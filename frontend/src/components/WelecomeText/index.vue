@@ -1,13 +1,13 @@
 <!-- 欢迎提示词 -->
 <script setup lang="ts">
-import { Typewriter } from 'vue-element-plus-x';
-import { useTimeGreeting } from '@/hooks/useTimeGreeting';
-import { useUserStore } from '@/stores';
+  import { Typewriter } from 'vue-element-plus-x'
+  import { useTimeGreeting } from '@/hooks/useTimeGreeting'
+  import { useUserStore } from '@/stores'
 
-const greeting = useTimeGreeting();
-const userStore = useUserStore();
+  const greeting = useTimeGreeting()
+  const userStore = useUserStore()
 
-const username = computed(() => userStore.userInfo?.username ?? '我是 Element Plus X');
+  const username = computed(() => userStore.userInfo?.username ?? '我是 Element Plus X')
 </script>
 
 <template>
@@ -18,19 +18,20 @@ const username = computed(() => userStore.userInfo?.username ?? '我是 Element 
       :content="`${greeting}好，${username}`"
       :typing="{
         step: 2,
-        interval: 45,
+        interval: 45
       }"
       :is-fog="{
-        bgColor: '#fff',
+        bgColor: '#fff'
       }"
     />
   </div>
 </template>
 
 <style scoped lang="scss">
-:deep {
-  .typer-container {
-    overflow: initial;
+  :deep {
+    .typer-container {
+      overflow: initial;
+      color: var(--login-dialog-logo-text-color);
+    }
   }
-}
 </style>

@@ -29,6 +29,7 @@
 
   // 图标
   .svg-icon {
+    -webkit-user-select: none;
     user-select: none;
     color: rgb(0, 0, 0, .5);
   }

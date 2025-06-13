@@ -235,7 +235,7 @@
           height: 36px;
           padding: 4px;
           overflow: hidden;
-          background-color: #ffffff;
+          background-color: var(--login-dialog-logo-background);
           border-radius: 50%;
           img {
             display: flex;
@@ -248,7 +248,7 @@
         .logo-text {
           font-size: 16px;
           font-weight: 700;
-          color: rgb(0 0 0 / 85%);
+          color: var(--login-dialog-logo-text-color);
           transform: skewX(-2deg);
         }
       }
@@ -264,7 +264,7 @@
             padding: 8px 6px;
             margin-top: 16px;
             margin-bottom: 6px;
-            color: #0057ff;
+            color: var(--login-dialog-mode-toggle-color);
             cursor: pointer;
             user-select: none;
             background-color: rgb(0 87 255 / 6%);
@@ -282,11 +282,12 @@
               width: 24px;
               height: 24px;
               font-size: 16px;
+              color: var(--login-dialog-mode-toggle-color);
             }
             .svg-icon {
               height: 24px;
               margin-left: auto;
-              color: rgb(0 87 255 / 30%);
+              color: var(--login-dialog-mode-toggle-color);
             }
           }
         }

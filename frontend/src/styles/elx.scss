@@ -7,6 +7,7 @@
 
 .elx-files-card-content {
   gap: 8px;
+
   .elx-files-card-description {
     line-height: 1.35;
   }
@@ -15,9 +16,9 @@
 .prev-next-btn {
   position: absolute;
   top: calc(50% + 3px);
-   transform: translateY(-50%);
-   z-index: 10;
-   cursor: pointer;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
 }
 
 .elx-attachments-file-card-wrap {
@@ -25,6 +26,7 @@
 }
 
 .elx-attachments-card {
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -32,5 +34,3 @@
 .el-sender-header {
   border-bottom-color: transparent !important;
 }
-
-

@@ -30,12 +30,12 @@ func main() {
 			app,
 		},
 		Windows: &windows.Options{
-			WebviewIsTransparent:              true,
-			WindowIsTranslucent:               true,
+			WebviewIsTransparent:              false,
+			WindowIsTranslucent:               false,
 			IsZoomControlEnabled:              false,
 			DisableFramelessWindowDecorations: true,
 		},
-		BackgroundColour: &options.RGBA{R: 255, G: 255, B: 255, A: 0},
+		BackgroundColour: &options.RGBA{R: 255, G: 255, B: 255, A: 1},
 		Frameless:        true,
 		CSSDragProperty:  "--my-drag-region",
 		Debug: options.Debug{

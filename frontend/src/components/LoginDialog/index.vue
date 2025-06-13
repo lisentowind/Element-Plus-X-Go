@@ -136,8 +136,8 @@
     height: 100vh;
     overflow: hidden;
     user-select: none;
-    background-color: rgb(0 0 0 / 50%);
-    backdrop-filter: blur(3px);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
     opacity: 1;
     transition: opacity 0.3s;
     border-radius: var(--custom-border-radius-mini);
