@@ -1,66 +1,66 @@
-import type { Component } from 'vue';
+import type { Component } from 'vue'
 
 export interface GetSessionListParams {
   /**
    * 创建者
    */
-  createBy?: number;
+  createBy?: number
   /**
    * 创建部门
    */
-  createDept?: number;
+  createDept?: number
   /**
    * 创建时间
    */
-  createTime?: Date;
+  createTime?: Date
   /**
    * 主键
    */
-  id?: number;
+  id?: number
   /**
    * 排序的方向desc或者asc
    */
-  isAsc?: string;
+  isAsc?: string
   /**
    * 排序列
    */
-  orderByColumn?: string;
+  orderByColumn?: string
   /**
    * 当前页数
    */
-  pageNum?: number;
+  pageNum?: number
   /**
    * 分页大小
    */
-  pageSize?: number;
+  pageSize?: number
   /**
    * 请求参数
    */
-  params?: { [key: string]: { [key: string]: any } };
+  params?: { [key: string]: { [key: string]: any } }
   /**
    * 备注
    */
-  remark?: string;
+  remark?: string
   /**
    * 会话内容
    */
-  sessionContent?: string;
+  sessionContent?: string
   /**
    * 会话标题
    */
-  sessionTitle?: string;
+  sessionTitle?: string
   /**
    * 更新者
    */
-  updateBy?: number;
+  updateBy?: number
   /**
    * 更新时间
    */
-  updateTime?: Date;
+  updateTime?: Date
   /**
    * 用户id
    */
-  userId: number;
+  userId: number
 }
 
 /**
@@ -71,31 +71,31 @@ export interface ChatSessionVo {
    * 主键
    */
   // id?: number
-  id?: string;
+  id?: string
   /**
    * 备注
    */
-  remark?: string;
+  remark?: string
   /**
    * 会话内容
    */
-  sessionContent?: string;
+  sessionContent?: string
   /**
    * 会话标题
    */
-  sessionTitle?: string;
+  sessionTitle?: string
   /**
    * 用户id
    */
-  userId?: number;
+  userId?: number
   /**
    * 创建时间
    */
-  createTime?: Date;
+  createTime?: Date
   /**
    * 自定义的消息前缀图标字段
    */
-  prefixIcon?: Component;
+  prefixIcon?: Component
 }
 
 /**
@@ -105,48 +105,48 @@ export interface CreateSessionDTO {
   /**
    * 创建者
    */
-  createBy?: number;
+  createBy?: number
   /**
    * 创建部门
    */
-  createDept?: number;
+  createDept?: number
   /**
    * 创建时间
    */
-  createTime?: Date;
+  createTime?: Date
   /**
    * 主键
    */
   // id?: number;
-  id?: string;
+  id?: string
   /**
    * 请求参数
    */
-  params?: { [key: string]: { [key: string]: any } };
+  params?: { [key: string]: { [key: string]: any } }
   /**
    * 备注
    */
-  remark?: string;
+  remark?: string
   /**
    * 会话内容
    */
-  sessionContent?: string;
+  sessionContent?: string
   /**
    * 会话标题
    */
-  sessionTitle: string;
+  sessionTitle: string
   /**
    * 更新者
    */
-  updateBy?: number;
+  updateBy?: number
   /**
    * 更新时间
    */
-  updateTime?: Date;
+  updateTime?: Date
   /**
    * 用户id
    */
-  userId: number;
+  userId: number
 }
 
 // export interface CreateSessionVO {

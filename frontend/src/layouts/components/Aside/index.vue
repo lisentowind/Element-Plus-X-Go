@@ -235,7 +235,7 @@
           height: 36px;
           padding: 4px;
           overflow: hidden;
-          background-color: var(--login-dialog-logo-background);
+          background-color: #ffffff;
           border-radius: 50%;
           img {
             display: flex;
@@ -248,7 +248,7 @@
         .logo-text {
           font-size: 16px;
           font-weight: 700;
-          color: var(--login-dialog-logo-text-color);
+          color: rgb(0 0 0 / 85%);
           transform: skewX(-2deg);
         }
       }
@@ -264,7 +264,7 @@
             padding: 8px 6px;
             margin-top: 16px;
             margin-bottom: 6px;
-            color: var(--login-dialog-mode-toggle-color);
+            color: #0057ff;
             cursor: pointer;
             user-select: none;
             background-color: rgb(0 87 255 / 6%);
@@ -282,12 +282,11 @@
               width: 24px;
               height: 24px;
               font-size: 16px;
-              color: var(--login-dialog-mode-toggle-color);
             }
             .svg-icon {
               height: 24px;
               margin-left: auto;
-              color: var(--login-dialog-mode-toggle-color);
+              color: rgb(0 87 255 / 30%);
             }
           }
         }
@@ -330,14 +329,14 @@
       0 10px 20px 0 rgb(0 0 0 / 10%),
       0 0 1px 0 rgb(0 0 0 / 15%);
     opacity: 0;
-    transition:
-      opacity 0.3s ease 0.3s,
-      transform 0.3s ease 0.3s;
 
     // 指定样式过渡
 
     // 向左偏移一个宽度
     transform: translateX(-100%);
+    transition:
+      opacity 0.3s ease 0.3s,
+      transform 0.3s ease 0.3s;
 
     /* 新增：未激活悬停时覆盖延迟 */
     &.no-delay {
@@ -361,12 +360,12 @@
 
     // 直接在这里写悬停时的样式（与 aside-container-suspended 一致）
     opacity: 1;
-    transition:
-      opacity 0.3s ease 0s,
-      transform 0.3s ease 0s;
 
     // 过渡动画沿用原有设置
     transform: translateX(15px);
+    transition:
+      opacity 0.3s ease 0s,
+      transform 0.3s ease 0s;
 
     // 会话列表高度-悬停样式
     .conversations-wrap {

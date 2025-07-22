@@ -16,9 +16,9 @@
 .prev-next-btn {
   position: absolute;
   top: calc(50% + 3px);
-  transform: translateY(-50%);
   z-index: 10;
   cursor: pointer;
+  transform: translateY(-50%);
 }
 
 .elx-attachments-file-card-wrap {
@@ -33,4 +33,12 @@
 // 隐藏 elx-sender-header 组件的底部边框
 .el-sender-header {
   border-bottom-color: transparent !important;
+}
+
+// markdown 代码块高亮 Mermaid 图表 切换tab高度样式覆盖
+.el-tabs__nav {
+  display: flex;
+  align-items: center;
+  height: 34px !important;
+  border-radius: 8px !important;
 }

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useDark, useToggle } from '@vueuse/core'
-  import { CloseTray } from 'wailsjs/go/main/App'
+  import { CloseTray } from '../../../wailsjs/go/main/App'
   import {
     WindowHide,
     WindowMaximise,
@@ -8,7 +8,7 @@
     WindowUnmaximise,
     WindowSetAlwaysOnTop,
     WindowReloadApp
-  } from 'wailsjs/runtime/runtime'
+  } from '../../../wailsjs/runtime/runtime'
 
   const centerDialogVisible = ref(false)
   const isMax = ref(false)

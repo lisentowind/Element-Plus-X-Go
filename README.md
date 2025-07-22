@@ -11,7 +11,7 @@
 ## 快速开始
 
 ### 环境准备
-（前端 Node 环境可略过，建议具备科学上网能力，否则环境安装可能失败）
+（前端 Node 环境略过，建议具备科学上网能力，否则环境安装可能失败）
 
 1. 安装 Go 环境：[https://golang.google.cn/](https://golang.google.cn/)
 2. 安装 Wails：[https://wails.io/zh-Hans/docs/gettingstarted/installation](https://wails.io/zh-Hans/docs/gettingstarted/installation)

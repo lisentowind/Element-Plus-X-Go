@@ -1,12 +1,12 @@
 <!-- 每个回话对应的聊天内容 -->
 <script setup lang="ts">
   import type { AnyObject } from 'typescript-api-pro'
-  import type { Sender } from 'vue-element-plus-x'
   import type { BubbleProps } from 'vue-element-plus-x/types/Bubble'
   import type { BubbleListInstance } from 'vue-element-plus-x/types/BubbleList'
   import type { FilesCardProps } from 'vue-element-plus-x/types/FilesCard'
   import type { ThinkingStatus } from 'vue-element-plus-x/types/Thinking'
   import { useHookFetch } from 'hook-fetch/vue'
+  import { Sender } from 'vue-element-plus-x'
   import { useRoute } from 'vue-router'
   import { send } from '@/api'
   import FilesSelect from '@/components/FilesSelect/index.vue'
@@ -22,6 +22,7 @@
     avatar: string
     thinkingStatus?: ThinkingStatus
     thinlCollapse?: boolean
+    reasoning_content?: string
   }
 
   const route = useRoute()
@@ -193,12 +194,7 @@
     cancel()
     // 结束最后一条消息打字状态
     if (bubbleItems.value.length) {
-      const upDataItem = bubbleItems.value[bubbleItems.value.length - 1]
-      upDataItem.typing = false
-      upDataItem.loading = false
-      upDataItem.content = upDataItem.content ? `${upDataItem.content}` : '已取消'
-      upDataItem.thinkingStatus = 'end'
-      upDataItem.thinlCollapse = false
+      bubbleItems.value[bubbleItems.value.length - 1].typing = false
     }
   }
 
@@ -216,7 +212,8 @@
       content: message || '',
       reasoning_content: '',
       thinkingStatus: 'start',
-      thinlCollapse: false
+      thinlCollapse: false,
+      noStyle: !isUser
     }
     bubbleItems.value.push(obj)
   }
@@ -259,6 +256,21 @@
             class="thinking-chain-warp"
             @change="handleChange"
           />
+        </template>
+
+        <template #content="{ item }">
+          <!-- chat 内容走 markdown -->
+          <XMarkdown
+            v-if="item.content && item.role === 'system'"
+            :markdown="item.content"
+            class="markdown-body"
+            :themes="{ light: 'github-light', dark: 'github-dark' }"
+            default-theme-mode="dark"
+          />
+          <!-- user 内容 纯文本 -->
+          <div v-if="item.content && item.role === 'user'" class="user-content">
+            {{ item.content }}
+          </div>
         </template>
       </BubbleList>
 
@@ -348,8 +360,20 @@
         overflow: hidden;
         border-radius: 12px;
       }
+      .user-content {
+        // 换行
+        white-space: pre-wrap;
+      }
       .markdown-body {
         background-color: transparent;
+      }
+      .markdown-elxLanguage-header-div {
+        top: -25px !important;
+      }
+
+      // xmarkdown 样式
+      .elx-xmarkdown-container {
+        padding: 8px 4px;
       }
     }
     .chat-defaul-sender {
