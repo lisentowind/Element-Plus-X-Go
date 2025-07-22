@@ -1,33 +1,33 @@
-export type LayoutType = 'vertical';
+export type LayoutType = 'vertical'
 
 // 仿豆包折叠逻辑
 export type CollapseType =
   | 'alwaysCollapsed' // 始终折叠
   | 'followSystem' // 跟随系统视口宽度
   | 'alwaysExpanded' // 始终打开
-  | 'narrowExpandWideCollapse'; // 系统视口 宽小则张，宽大则收
+  | 'narrowExpandWideCollapse' // 系统视口 宽小则张，宽大则收
 
 export interface DesignConfigState {
   // 系统主题
-  darkMode: 'light' | 'dark' | 'inverted';
+  darkMode: 'light' | 'dark'
   // 系统主题色
-  themeColor: string;
+  themeColor: string
   // 系统内置风格
-  themeColorList: string[];
+  themeColorList: string[]
   // 是否开启路由动画
-  isPageAnimate: boolean;
+  isPageAnimate: boolean
   // 路由动画类型
-  pageAnimateType: string;
+  pageAnimateType: string
   // 布局模式 (纵向：vertical | ... | 自己定义)
-  layout: LayoutType;
+  layout: LayoutType
   // 折叠类型
-  collapseType: CollapseType;
+  collapseType: CollapseType
   // 是否折叠菜单
-  isCollapse: boolean;
+  isCollapse: boolean
   // 安全区是否被悬停
-  isSafeAreaHover: boolean;
+  isSafeAreaHover: boolean
   // 跟踪是否首次激活悬停
-  hasActivatedHover: boolean;
+  hasActivatedHover: boolean
 }
 
 export const themeColorList: string[] = [
@@ -49,8 +49,8 @@ export const themeColorList: string[] = [
   '#1768AC',
   '#FB9300',
   '#FC5404',
-  '#8675ff',
-];
+  '#8675ff'
+]
 
 const design: DesignConfigState = {
   // 深色主题
@@ -73,7 +73,7 @@ const design: DesignConfigState = {
   // 安全区是否被悬停
   isSafeAreaHover: false,
   // 跟踪是否首次激活悬停
-  hasActivatedHover: false,
-};
+  hasActivatedHover: false
+}
 
-export default design;
+export default design

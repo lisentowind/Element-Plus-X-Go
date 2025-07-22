@@ -1,6 +1,6 @@
-import type { CollapseType, LayoutType } from '@/config/design';
-import { defineStore } from 'pinia';
-import designSetting from '@/config/design';
+import type { CollapseType, LayoutType } from '@/config/design'
+import { defineStore } from 'pinia'
+import designSetting from '@/config/design'
 
 const {
   darkMode: reDarkMode,
@@ -12,24 +12,24 @@ const {
   collapseType: reCollapseType,
   isCollapse: reisCollapse,
   isSafeAreaHover: reisSafeAreaHover,
-  hasActivatedHover: rehasActivatedHover,
-} = designSetting;
+  hasActivatedHover: rehasActivatedHover
+} = designSetting
 
 export const useDesignStore = defineStore(
   'design',
   () => {
-    const darkMode = ref(reDarkMode);
-    const setDarkMode = (modeType: 'light' | 'dark' | 'inverted') => {
-      darkMode.value = modeType;
-    };
+    const darkMode = ref(reDarkMode)
+    const setDarkMode = (modeType: 'light' | 'dark') => {
+      darkMode.value = modeType
+    }
 
-    const pageAnimateType = ref(rePageAnimateType);
+    const pageAnimateType = ref(rePageAnimateType)
 
     const setPageAnimateType = (type: string) => {
-      pageAnimateType.value = type;
-    };
+      pageAnimateType.value = type
+    }
 
-    const layout = ref<LayoutType>(reLayout);
+    const layout = ref<LayoutType>(reLayout)
 
     // 当前只有一个布局，暂时不将这个方法暴露出去
     // const _setLayout = (layoutType: 'vertical') => {
@@ -37,46 +37,46 @@ export const useDesignStore = defineStore(
     // };
 
     // 折叠状态
-    const collapseType = ref<CollapseType>(reCollapseType);
+    const collapseType = ref<CollapseType>(reCollapseType)
     const setCollapseType = (type: CollapseType) => {
-      collapseType.value = type;
-    };
+      collapseType.value = type
+    }
 
     // 最终是否展开左侧菜单
-    const isCollapse = ref<boolean>(reisCollapse);
+    const isCollapse = ref<boolean>(reisCollapse)
 
     const setCollapse = (collapseFinal: boolean) => {
-      isCollapse.value = collapseFinal;
-    };
+      isCollapse.value = collapseFinal
+    }
 
     // 折叠按钮是否被悬停
-    const isSafeAreaHover = ref<boolean>(reisSafeAreaHover);
+    const isSafeAreaHover = ref<boolean>(reisSafeAreaHover)
 
     const setSafeAreaHover = (hover: boolean) => {
-      isSafeAreaHover.value = hover;
-    };
+      isSafeAreaHover.value = hover
+    }
 
     // 跟踪是否首次激活悬停
-    const hasActivatedHover = ref<boolean>(rehasActivatedHover);
+    const hasActivatedHover = ref<boolean>(rehasActivatedHover)
 
     // 两个监听不要合并
     watch(
       () => isCollapse.value,
       (newValue) => {
         if (newValue) {
-          hasActivatedHover.value = false;
+          hasActivatedHover.value = false
         }
       },
-      { deep: true },
-    );
+      { deep: true }
+    )
 
     watch(
       () => isSafeAreaHover.value,
       () => {
-        hasActivatedHover.value = true;
+        hasActivatedHover.value = true
       },
-      { deep: true },
-    );
+      { deep: true }
+    )
 
     return {
       darkMode,
@@ -93,10 +93,10 @@ export const useDesignStore = defineStore(
       setCollapse,
       isSafeAreaHover,
       setSafeAreaHover,
-      hasActivatedHover,
-    };
+      hasActivatedHover
+    }
   },
   {
-    persist: true,
-  },
-);
+    persist: true
+  }
+)

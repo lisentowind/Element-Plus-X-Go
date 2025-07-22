@@ -1,12 +1,18 @@
 <script lang="ts" setup>
   import AppHeader from '@/components/Header/index.vue'
+  import { useTheme } from '@/hooks/useTheme'
+
   const loading = ref(true)
+  const { initTheme } = useTheme()
 
   const messageConfig = reactive({
     offset: 65
   })
 
   onMounted(() => {
+    // 初始化主题
+    initTheme()
+    
     setTimeout(() => {
       loading.value = false
     }, 500)

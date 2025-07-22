@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import { useDark, useToggle } from '@vueuse/core'
   import { CloseTray } from '../../../wailsjs/go/main/App'
   import {
     WindowHide,
@@ -9,22 +8,18 @@
     WindowSetAlwaysOnTop,
     WindowReloadApp
   } from '../../../wailsjs/runtime/runtime'
+  import { useTheme } from '@/hooks/useTheme'
 
   const centerDialogVisible = ref(false)
   const isMax = ref(false)
   const isTop = ref(false)
   const loading = ref(true)
 
-  const openTheme = ref(false)
-  const isDark = useDark()
-  const toggleDark = useToggle(isDark)
+  const { toggleTheme, getThemeIcon, getThemeName } = useTheme()
 
   const changeTheme = () => {
-    if (!openTheme.value) {
-      ElMessage.info('暂未开放')
-      return
-    }
-    toggleDark()
+    toggleTheme()
+    ElMessage.success(`已切换到${getThemeName.value}`)
   }
 
   const quitApp = () => {
@@ -92,8 +87,7 @@
           <SvgIcon name="TablerRefresh" />
         </div>
         <div class="header-control-btn theme" @click="changeTheme">
-          <SvgIcon v-if="!isDark" name="UilSun" />
-          <SvgIcon v-else name="UilMoon" />
+          <SvgIcon :name="getThemeIcon" />
         </div>
       </el-space>
     </div>
