@@ -10,6 +10,10 @@
   } from '../../../wailsjs/runtime/runtime'
   import { useTheme } from '@/hooks/useTheme'
 
+  const emit = defineEmits<{
+    (e: 'pinned-change', isPinned: boolean): void
+  }>()
+
   const centerDialogVisible = ref(false)
   const isMax = ref(false)
   const isTop = ref(false)
@@ -55,6 +59,7 @@
   const changeWindowFixed = () => {
     isTop.value = !isTop.value
     WindowSetAlwaysOnTop(isTop.value)
+    emit('pinned-change', isTop.value)
     ElMessage.success({
       message: isTop.value ? '窗口已置顶' : '窗口已取消置顶'
     })
@@ -78,29 +83,39 @@
   <!-- 替代原生软件的边框 实现拖拽 -->
   <div class="header" @dblclick="changeWindowSize">
     <div class="left-control">
-      <el-space>
-        <div class="header-control-btn fixedWindow" @click="changeWindowFixed">
+      <el-space :size="8">
+        <div
+          class="header-control-btn fixedWindow"
+          @click.prevent="changeWindowFixed"
+          :class="{ active: isTop }"
+          :title="isTop ? '取消置顶' : '窗口置顶'"
+        >
           <SvgIcon v-if="!isTop" name="TablerPinned" />
           <SvgIcon v-if="isTop" name="TablerPinnedOff" />
         </div>
-        <div class="header-control-btn refresh" @click="WindowReloadApp">
+        <div class="header-control-btn refresh" @click.prevent="WindowReloadApp" title="刷新应用">
           <SvgIcon name="TablerRefresh" />
         </div>
-        <div class="header-control-btn theme" @click="changeTheme">
+        <div class="header-control-btn theme" @click.prevent="changeTheme" title="切换主题">
           <SvgIcon :name="getThemeIcon" />
         </div>
       </el-space>
     </div>
+
+    <div class="app-title">
+      <span>Elmeent-Plus-X</span>
+    </div>
+
     <div class="right-contorl">
-      <el-space>
-        <div class="header-control-btn hide" @click="WindowHide">
+      <el-space :size="8">
+        <div class="header-control-btn hide" @click.prevent="WindowHide" title="最小化">
           <SvgIcon name="TypcnMinus" />
         </div>
-        <div class="header-control-btn window" @click="changeWindowSize">
+        <div class="header-control-btn window" @click.prevent="changeWindowSize" :title="isMax ? '还原窗口' : '最大化'">
           <SvgIcon v-if="!isMax" name="windowMax" />
           <SvgIcon v-if="isMax" name="windowMini" />
         </div>
-        <div class="header-control-btn close" @click="quitApp">
+        <div class="header-control-btn close" @click.prevent="quitApp" title="关闭应用">
           <SvgIcon name="EpCloseBold" />
         </div>
       </el-space>
@@ -124,47 +139,147 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 12px;
     --my-drag-region: drag;
     -webkit-user-select: none;
     user-select: none;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+
+    .app-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--el-text-color-primary);
+      opacity: 0.8;
+      pointer-events: none;
+    }
 
     .left-control,
     .right-contorl {
+      display: flex;
+      align-items: center;
+      z-index: 1;
+
+      /* 确保按钮区域不会被拖拽区域影响 */
+      --my-drag-region: no-drag;
+
       .header-control-btn {
         cursor: pointer;
-        transition: all 0.3s;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 2px solid transparent;
-        color: rgb(255, 255, 255);
-        transition: all 0.3s;
+        color: rgba(255, 255, 255, 0.9);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        backdrop-filter: blur(8px);
+        border: 1px solid transparent;
+        user-select: none;
+        -webkit-user-select: none;
+
+        /* 增大点击区域 */
+        &::before {
+          content: '';
+          position: absolute;
+          inset: -4px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+          opacity: 0;
+          transition: all 0.2s ease;
+          z-index: -1;
+        }
+
         &:hover {
-          border: 2px solid var(--header-control-btn-border-color);
+          transform: translateY(-1px) scale(1.05);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+          border-color: rgba(255, 255, 255, 0.3);
+
+          &::before {
+            opacity: 1;
+            inset: -2px;
+          }
+        }
+
+        &:active {
+          transform: translateY(1px) scale(0.98);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          transition: all 0.1s ease;
+        }
+
+        .svg-icon {
+          width: 16px;
+          height: 16px;
+          transition: all 0.2s ease;
+          pointer-events: none;
         }
       }
 
-      .fixedWindow,
-      .refresh,
-      .theme,
-      .hide {
-        background-color: rgb(24, 191, 59);
-      }
-      .window {
-        background-color: rgb(255, 201, 5);
-      }
-      .close {
-        background-color: rgb(251, 108, 100);
+      .fixedWindow {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+
+        &.active {
+          background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+
+          &:hover {
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+          }
+        }
+
+        &:hover {
+          box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
+        }
       }
 
-      .fixedWindow,
-      .refresh,
+      .refresh {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+
+        &:hover {
+          box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
+
+          .svg-icon {
+            transform: rotate(90deg);
+          }
+        }
+      }
+
       .theme {
-        font-weight: bold;
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+
+        &:hover {
+          box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
+        }
+      }
+
+      .hide {
+        background: linear-gradient(135deg, #6b7280, #4b5563);
+
+        &:hover {
+          box-shadow: 0 4px 16px rgba(107, 114, 128, 0.4);
+        }
+      }
+
+      .window {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+
+        &:hover {
+          box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
+        }
+      }
+
+      .close {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+
+        &:hover {
+          box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+
+          .svg-icon {
+            transform: rotate(90deg);
+          }
+        }
       }
     }
   }
