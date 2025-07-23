@@ -23,8 +23,16 @@
 }
 
 html {
+  // 🌞 亮色模式下的彩虹色（清新柔和）
+  @light-rainbow-set-1: #a8edea, #d6eaf8, #fed6e3, #d0cde1, #fef9d7;
+  @light-rainbow-set-2: #e0c3fc, #fceabb, #a1c4fd, #c2e9fb, #d4fc79;
+  @light-rainbow-set-3: #c2ffd8, #f9f586, #fccb90, #f6e1f9, #d0f0fd;
+  @light-rainbow-set-4: #cfd9df, #e2ebf0, #e0c3fc, #f6f6f6, #fbc2eb;
+  @light-rainbow-set-5: #ffecd2, #fcb69f, #a1c4fd, #cfd9ff, #e0ffe0;
+
   --custom-window-back-color: rgba(255, 255, 255, 1);
   --custom-box-back-color: rgba(0, 0, 0, 0.3);
+  --custom-box-back-color-op: rgba(0, 0, 0, 0.1);
   --custom-box-back-hover-color: rgba(0, 0, 0, 0.8);
   --custom-border-radius-mini: 2px;
   --custom-border-radius: 5px;
@@ -44,11 +52,24 @@ html {
   --login-dialog-logo-text-color: #191919;
 
   --svg-icon-color: #191919b0;
+
+  .app-header {
+    // 选择一个配色方案使用
+    .generate-shimmer(@light-rainbow-set-1);
+  }
 }
 
 html[class='dark'] {
+  // 🌚 暗色模式下的彩虹色（加深对比，依然清爽）
+  @dark-rainbow-set-1: #6dd5ed, #2193b0, #cc2b5e, #753a88, #f7797d;
+  @dark-rainbow-set-2: #667eea, #764ba2, #89f7fe, #43e97b, #38f9d7;
+  @dark-rainbow-set-3: #355c7d, #6c5b7b, #c06c84, #f67280, #f8b195;
+  @dark-rainbow-set-4: #3a1c71, #d76d77, #ffaf7b, #ff6a00, #ee0979;
+  @dark-rainbow-set-5: #1f4037, #99f2c8, #2c3e50, #4ca1af, #bdc3c7;
+
   --custom-window-back-color: rgba(23, 23, 26, 1);
   --custom-box-back-color: rgba(255, 255, 255, 0.8);
+  --custom-box-back-color-op: rgba(255, 255, 255, 0.2);
   --custom-box-back-hover-color: rgba(255, 255, 255, 0.6);
   --custom-border-radius-mini: 2px;
   --custom-border-radius: 5px;
@@ -67,4 +88,42 @@ html[class='dark'] {
   --login-dialog-logo-text-color: #ffffff;
 
   --svg-icon-color: #ffffffb0;
+
+  .app-header {
+    // 选择一个配色方案使用
+    .generate-shimmer(@dark-rainbow-set-1);
+  }
+}
+
+.generate-shimmer(@colors) {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      60deg,
+      rgba(255, 255, 255, 0) 0%,
+      extract(@colors, 1) 25%,
+      extract(@colors, 2) 50%,
+      extract(@colors, 3) 75%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 100% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+// 动画定义
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }

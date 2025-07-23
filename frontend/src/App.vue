@@ -50,7 +50,7 @@
     position: relative;
 
     &.pinned {
-      border: 2px solid #3b82f6;
+      border: 3px solid #17a80f;
       box-shadow:
         0 0 20px rgba(59, 130, 246, 0.3),
         0 0 40px rgba(59, 130, 246, 0.2),
