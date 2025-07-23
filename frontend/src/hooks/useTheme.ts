@@ -58,9 +58,9 @@ export const useTheme = () => {
   const getThemeIcon = computed(() => {
     switch (designStore.darkMode) {
       case 'light':
-        return 'UilSun'
-      case 'dark':
         return 'UilMoon'
+      case 'dark':
+        return 'UilSun'
       default:
         return 'UilSun'
     }
@@ -70,9 +70,9 @@ export const useTheme = () => {
   const getThemeName = computed(() => {
     switch (designStore.darkMode) {
       case 'light':
-        return '亮色模式'
-      case 'dark':
         return '暗色模式'
+      case 'dark':
+        return '亮色模式'
       default:
         return '亮色模式'
     }

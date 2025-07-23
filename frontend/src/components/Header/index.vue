@@ -19,7 +19,53 @@
   const isTop = ref(false)
   const loading = ref(true)
 
-  const { toggleTheme, getThemeIcon, getThemeName } = useTheme()
+  // 右键菜单相关状态
+  const contextMenuVisible = ref(false)
+  const contextMenuPosition = ref({ x: 0, y: 0 })
+
+  const { toggleTheme, getThemeIcon, getThemeName, currentTheme } = useTheme()
+
+  // 右键菜单项配置
+  const contextMenuItems = computed(() => [
+    {
+      label: isTop.value ? '取消置顶' : '窗口置顶',
+      icon: isTop.value ? 'TablerPinnedOff' : 'TablerPinned',
+      action: changeWindowFixed,
+      type: 'pin'
+    },
+    {
+      label: '刷新应用',
+      icon: 'TablerRefresh',
+      action: () => WindowReloadApp(),
+      type: 'refresh'
+    },
+    {
+      label: `切换到${getThemeName.value}`,
+      icon: getThemeIcon.value,
+      action: changeTheme,
+      type: 'theme'
+    },
+    { type: 'divider' },
+    {
+      label: '最小化',
+      icon: 'TypcnMinus',
+      action: () => WindowHide(),
+      type: 'minimize'
+    },
+    {
+      label: isMax.value ? '还原窗口' : '最大化',
+      icon: isMax.value ? 'windowMini' : 'windowMax',
+      action: changeWindowSize,
+      type: 'maximize'
+    },
+    { type: 'divider' },
+    {
+      label: '关闭应用',
+      icon: 'EpCloseBold',
+      action: quitApp,
+      type: 'close'
+    }
+  ])
 
   const changeTheme = () => {
     toggleTheme()
@@ -65,6 +111,29 @@
     })
   }
 
+  // 右键菜单事件处理
+  const showContextMenu = (event: MouseEvent) => {
+    event.preventDefault()
+    contextMenuPosition.value = { x: event.clientX, y: event.clientY }
+    contextMenuVisible.value = true
+  }
+
+  const hideContextMenu = () => {
+    contextMenuVisible.value = false
+  }
+
+  const handleMenuItemClick = (item: any) => {
+    if (item.action) {
+      item.action()
+    }
+    hideContextMenu()
+  }
+
+  // 点击其他地方隐藏菜单
+  const handleClickOutside = () => {
+    hideContextMenu()
+  }
+
   defineOptions({
     name: 'AppHeader'
   })
@@ -76,12 +145,20 @@
     setTimeout(() => {
       loading.value = false
     }, 500)
+
+    // 添加全局点击事件监听
+    document.addEventListener('click', handleClickOutside)
+  })
+
+  onUnmounted(() => {
+    // 清理事件监听器
+    document.removeEventListener('click', handleClickOutside)
   })
 </script>
 
 <template>
   <!-- 替代原生软件的边框 实现拖拽 -->
-  <div class="header" @dblclick="changeWindowSize">
+  <div class="header" @dblclick="changeWindowSize" @contextmenu="showContextMenu">
     <div class="left-control">
       <el-space :size="8">
         <div
@@ -129,6 +206,37 @@
         </div>
       </template>
     </el-dialog>
+
+    <!-- 右键菜单 -->
+    <teleport to="body">
+      <div
+        v-if="contextMenuVisible"
+        class="context-menu"
+        :style="{
+          left: contextMenuPosition.x + 'px',
+          top: contextMenuPosition.y + 'px'
+        }"
+        @click.stop
+      >
+        <div
+          v-for="(item, index) in contextMenuItems"
+          :key="index"
+          class="context-menu-item"
+          :class="{
+            light: currentTheme === 'light',
+            dark: currentTheme === 'dark',
+            divider: item.type === 'divider',
+            [`menu-${item.type}`]: item.type !== 'divider'
+          }"
+          @click="item.type !== 'divider' ? handleMenuItemClick(item) : null"
+        >
+          <template v-if="item.type !== 'divider'">
+            <SvgIcon :name="item.icon ?? ''" class="menu-icon" />
+            <span class="menu-label">{{ item.label }}</span>
+          </template>
+        </div>
+      </div>
+    </teleport>
   </div>
 </template>
 
@@ -293,6 +401,144 @@
     }
     100% {
       background-position: 0% 50%;
+    }
+  }
+
+  // 右键菜单样式
+  .context-menu {
+    position: fixed;
+    background: transparent;
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 8px;
+    min-width: 180px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 9999;
+    animation: contextMenuFadeIn 0.15s ease-out;
+    user-select: none;
+    -webkit-user-select: none;
+
+    .context-menu-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+
+      &:not(.divider):hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(2px);
+      }
+
+      &.divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 6px 0;
+        padding: 0;
+        cursor: default;
+      }
+
+      .menu-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 12px;
+        transition: all 0.2s ease;
+      }
+
+      .menu-label {
+        flex: 1;
+        font-weight: 500;
+      }
+
+      // 不同功能的颜色主题
+      &.menu-pin {
+        .menu-icon {
+          color: #22c55e;
+        }
+        &:hover .menu-icon {
+          color: #16a34a;
+        }
+      }
+
+      &.menu-refresh {
+        .menu-icon {
+          color: #22c55e;
+        }
+        &:hover {
+          .menu-icon {
+            color: #16a34a;
+            transform: rotate(90deg);
+          }
+        }
+      }
+
+      &.menu-theme {
+        .menu-icon {
+          color: #8b5cf6;
+        }
+        &:hover .menu-icon {
+          color: #7c3aed;
+        }
+      }
+
+      &.menu-minimize {
+        .menu-icon {
+          color: #6b7280;
+        }
+        &:hover .menu-icon {
+          color: #4b5563;
+        }
+      }
+
+      &.menu-maximize {
+        .menu-icon {
+          color: #f59e0b;
+        }
+        &:hover .menu-icon {
+          color: #d97706;
+        }
+      }
+
+      &.menu-close {
+        .menu-icon {
+          color: #ef4444;
+        }
+        &:hover {
+          background: rgba(239, 68, 68, 0.1);
+          .menu-icon {
+            color: #dc2626;
+            transform: rotate(90deg);
+          }
+        }
+      }
+    }
+
+    .light {
+      color: black;
+    }
+    .dark {
+      color: white;
+    }
+  }
+
+  @keyframes contextMenuFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
     }
   }
 </style>

@@ -1,51 +1,46 @@
 <!-- 切换模型 -->
 <script setup lang="ts">
-import type { GetSessionListVO } from '@/api/model/types';
-import Popover from '@/components/Popover/index.vue';
-import SvgIcon from '@/components/SvgIcon/index.vue';
-import { useModelStore } from '@/stores/modules/model';
+  import type { GetSessionListVO } from '@/api/model/types'
+  import Popover from '@/components/Popover/index.vue'
+  import SvgIcon from '@/components/SvgIcon/index.vue'
+  import { useModelStore } from '@/stores/modules/model'
 
-const modelStore = useModelStore();
+  const modelStore = useModelStore()
 
-onMounted(async () => {
-  await modelStore.requestModelList();
-  // 设置默认模型
-  if (
-    modelStore.modelList.length > 0
-    && (!modelStore.currentModelInfo || !modelStore.currentModelInfo.modelName)
-  ) {
-    modelStore.setCurrentModelInfo(modelStore.modelList[0]);
+  onMounted(async () => {
+    await modelStore.requestModelList()
+    // 设置默认模型
+    if (modelStore.modelList.length > 0 && (!modelStore.currentModelInfo || !modelStore.currentModelInfo.modelName)) {
+      modelStore.setCurrentModelInfo(modelStore.modelList[0])
+    }
+  })
+
+  const currentModelName = computed(() => modelStore.currentModelInfo && modelStore.currentModelInfo.modelName)
+  const popoverList = computed(() => modelStore.modelList)
+
+  /* 弹出面板 开始 */
+  const popoverStyle = ref({
+    width: '200px',
+    padding: '4px',
+    height: 'fit-content',
+    background: 'var(--el-bg-color, #fff)',
+    border: '1px solid var(--el-border-color-light)',
+    borderRadius: '8px',
+    boxShadow: '0 2px 12px 0 rgba(0, 0, 0, 0.1)'
+  })
+  const popoverRef = ref()
+
+  // 显示
+  async function showPopover() {
+    // 获取最新的模型列表
+    await modelStore.requestModelList()
   }
-});
 
-const currentModelName = computed(
-  () => modelStore.currentModelInfo && modelStore.currentModelInfo.modelName,
-);
-const popoverList = computed(() => modelStore.modelList);
-
-/* 弹出面板 开始 */
-const popoverStyle = ref({
-  width: '200px',
-  padding: '4px',
-  height: 'fit-content',
-  background: 'var(--el-bg-color, #fff)',
-  border: '1px solid var(--el-border-color-light)',
-  borderRadius: '8px',
-  boxShadow: '0 2px 12px 0 rgba(0, 0, 0, 0.1)',
-});
-const popoverRef = ref();
-
-// 显示
-async function showPopover() {
-  // 获取最新的模型列表
-  await modelStore.requestModelList();
-}
-
-// 点击
-function handleClick(item: GetSessionListVO) {
-  modelStore.setCurrentModelInfo(item);
-  popoverRef.value?.hide?.();
-}
+  // 点击
+  function handleClick(item: GetSessionListVO) {
+    modelStore.setCurrentModelInfo(item)
+    popoverRef.value?.hide?.()
+  }
 </script>
 
 <template>
@@ -95,9 +90,7 @@ function handleClick(item: GetSessionListVO) {
                 {{ item.modelName }}
               </div>
             </template>
-            <div
-              class="popover-content-box-item-text text-wrap max-w-200px rounded-lg p-8px font-size-12px line-height-tight"
-            >
+            <div class="popover-content-box-item-text text-wrap max-w-200px rounded-lg p-8px font-size-12px line-height-tight">
               {{ item.remark }}
             </div>
           </Popover>
@@ -108,44 +101,44 @@ function handleClick(item: GetSessionListVO) {
 </template>
 
 <style scoped lang="scss">
-.model-select-box {
-  color: var(--el-color-primary, #409eff);
-  background: var(--el-color-primary-light-9, rgb(235.9 245.3 255));
-  border: 1px solid var(--el-color-primary, #409eff);
-  border-radius: 10px;
-}
-.popover-content-box-item.is-select {
-  font-weight: 700;
-  color: var(--el-color-primary, #409eff);
-}
-.popover-content-box {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  height: 200px;
-  overflow: hidden auto;
-  .popover-content-box-items {
-    :deep() {
-      .popover-trigger-item-text {
-        width: 100%;
+  .model-select-box {
+    color: var(--el-color-primary, #409eff);
+    background-color: var(--sidebar-background-color);
+    border: 1px solid var(--el-color-primary, #409eff);
+    border-radius: 10px;
+  }
+  .popover-content-box-item.is-select {
+    font-weight: 700;
+    color: var(--el-color-primary, #409eff);
+  }
+  .popover-content-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    height: 200px;
+    overflow: hidden auto;
+    .popover-content-box-items {
+      :deep() {
+        .popover-trigger-item-text {
+          width: 100%;
+        }
       }
     }
-  }
-  .popover-content-box-item-text {
-    color: white;
-    background-color: black;
-  }
+    .popover-content-box-item-text {
+      color: white;
+      background-color: black;
+    }
 
-  // 滚动条样式
-  &::-webkit-scrollbar {
-    width: 4px;
+    // 滚动条样式
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #f5f5f5;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #cccccc;
+      border-radius: 4px;
+    }
   }
-  &::-webkit-scrollbar-track {
-    background: #f5f5f5;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #cccccc;
-    border-radius: 4px;
-  }
-}
 </style>

@@ -248,7 +248,7 @@
         .logo-text {
           font-size: 16px;
           font-weight: 700;
-          color: rgb(0 0 0 / 85%);
+          color: var(--login-dialog-logo-text-color);
           transform: skewX(-2deg);
         }
       }
