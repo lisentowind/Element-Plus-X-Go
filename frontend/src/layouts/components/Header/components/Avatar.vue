@@ -134,7 +134,7 @@ function handleClick(item: any) {
   padding: 8px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: var(--border-radius-md);
   box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
 }
 </style>

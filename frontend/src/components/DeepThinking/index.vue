@@ -29,6 +29,6 @@ function setIsDeepThinking() {
 .deep-thinking-btn.is-select {
   color: var(--el-color-primary, #409eff);
   border: 1px solid var(--el-color-primary, #409eff);
-  border-radius: 15px;
+  border-radius: var(--border-radius-xl);
 }
 </style>

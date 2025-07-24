@@ -10,7 +10,7 @@
   user-select: none;
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  border-radius: 16px;
+  border-radius: var(--border-radius-xl);
   position: relative;
   overflow: hidden;
 
@@ -34,7 +34,7 @@
       background: rgba(255, 255, 255, 0.08);
       -webkit-backdrop-filter: blur(12px);
       backdrop-filter: blur(12px);
-      border-radius: 16px;
+      border-radius: var(--border-radius-xl);
       border: 1px solid rgba(255, 255, 255, 0.15);
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 
@@ -68,7 +68,7 @@
         font-weight: 700;
         color: var(--login-dialog-logo-text-color);
         background: linear-gradient(135deg, #f59e0b, #d97706);
-        border-radius: 8px;
+        border-radius: var(--border-radius-md);
         text-transform: uppercase;
         letter-spacing: 0.5px;
         box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
@@ -91,7 +91,7 @@
       background: rgba(255, 255, 255, 0.05);
       -webkit-backdrop-filter: blur(12px);
       backdrop-filter: blur(12px);
-      border-radius: 16px;
+      border-radius: var(--border-radius-xl);
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 
@@ -100,7 +100,7 @@
         cursor: pointer;
         width: 36px;
         height: 36px;
-        border-radius: 12px;
+        border-radius: var(--border-radius-lg);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -251,7 +251,7 @@
   background: rgba(255, 255, 255, 0.08);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  border-radius: 16px;
+  border-radius: var(--border-radius-xl);
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -271,7 +271,7 @@
     align-items: center;
     box-sizing: border-box;
     padding: 10px 14px;
-    border-radius: 10px;
+    border-radius: var(--border-radius-md);
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 14px;
@@ -377,26 +377,77 @@
 
 // 响应式设计
 @media (max-width: 768px) {
-  .header {
-    padding: 0 12px;
+  .app-header {
+    padding: 0 8px;
     height: 44px;
 
     .left-control .control-group,
     .right-control .control-group {
-      gap: 4px;
+      gap: 2px;
+      padding: 2px;
 
       .control-btn {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
+        border-radius: var(--border-radius-md);
+
+        .btn-content .svg-icon {
+          width: 14px;
+          height: 14px;
+        }
+
+        &:hover {
+          transform: translateY(-1px) scale(1.02);
+        }
+      }
+    }
+
+    // 左侧只保留最重要的按钮
+    .left-control .control-group {
+      .refresh-btn {
+        display: none;
       }
     }
 
     .app-title .title-container {
-      padding: 4px 12px;
-      gap: 6px;
+      padding: 3px 8px;
+      gap: 4px;
 
       .title-text {
-        font-size: 13px;
+        font-size: 12px;
+        display: none; // 小屏幕隐藏文字，只保留图标和徽章
+      }
+
+      .title-icon {
+        width: 16px;
+        height: 16px;
+
+        .icon-dot {
+          width: 6px;
+          height: 6px;
+        }
+      }
+
+      .title-badge {
+        padding: 1px 4px;
+        font-size: 9px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    // 超小屏幕进一步优化
+    .left-control .control-group {
+      .theme-btn {
+        display: none; // 隐藏主题切换按钮
+      }
+    }
+
+    .app-title .title-container {
+      .title-badge {
+        display: none; // 隐藏Pro徽章
       }
     }
   }

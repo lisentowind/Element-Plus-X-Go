@@ -45,7 +45,7 @@
     box-sizing: border-box;
     overflow: hidden;
     border: 1px solid var(--custom-border-color);
-    border-radius: var(--custom-border-radius-mini);
+    border-radius: var(--border-radius-xs);
     transition: all 0.3s ease;
     position: relative;
 
@@ -60,7 +60,7 @@
         content: '';
         position: absolute;
         inset: -2px;
-        border-radius: var(--custom-border-radius-mini);
+        border-radius: var(--border-radius-xs);
         background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4, #3b82f6);
         background-size: 400% 400%;
         animation: pinnedGlow 0.3s ease infinite;
@@ -77,7 +77,7 @@
         background: linear-gradient(135deg, #3b82f6, #1d4ed8);
         color: white;
         padding: 4px 10px;
-        border-radius: 12px;
+        border-radius: var(--border-radius-lg);
         font-size: 11px;
         font-weight: 600;
         z-index: 1000;

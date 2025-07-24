@@ -182,7 +182,7 @@
               :items-style="{
                 marginLeft: '8px',
                 userSelect: 'none',
-                borderRadius: '10px',
+                borderRadius: 'var(--border-radius-lg)',
                 padding: '8px 12px'
               }"
               :items-active-style="{
@@ -214,7 +214,7 @@
     z-index: 11;
     width: var(--sidebar-default-width);
     height: 90%;
-    border-radius: var(--custom-border-radius-big);
+    border-radius: var(--border-radius-xl);
     pointer-events: auto;
     background-color: var(--sidebar-background-color);
     border-right: 0.5px solid var(--s-color-border-tertiary, rgb(0 0 0 / 8%));
@@ -269,7 +269,7 @@
             user-select: none;
             background-color: rgb(0 87 255 / 6%);
             border: 1px solid rgb(0 102 255 / 15%);
-            border-radius: 12px;
+            border-radius: var(--border-radius-lg);
             &:hover {
               background-color: rgb(0 87 255 / 12%);
             }
@@ -324,7 +324,7 @@
     /* 禁用悬停事件 */
     pointer-events: none;
     border: 1px solid rgb(0 0 0 / 8%);
-    border-radius: 15px;
+    border-radius: var(--border-radius-xl);
     box-shadow:
       0 10px 20px 0 rgb(0 0 0 / 10%),
       0 0 1px 0 rgb(0 0 0 / 15%);
@@ -353,7 +353,7 @@
     overflow: hidden;
     pointer-events: auto;
     border: 1px solid rgb(0 0 0 / 8%);
-    border-radius: 15px;
+    border-radius: var(--border-radius-xl);
     box-shadow:
       0 10px 20px 0 rgb(0 0 0 / 10%),
       0 0 1px 0 rgb(0 0 0 / 15%);

@@ -193,7 +193,7 @@ onBeforeUnmount(() => {
     padding: 12px;
     overflow: hidden;
     border: 1px solid #f0f2f5;
-    border-radius: 16px;
+    border-radius: var(--border-radius-xl);
     box-shadow: 0 2px 12px 0 rgb(0 0 0 / 8%);
     .qr-img {
       display: flex;
@@ -216,7 +216,7 @@ onBeforeUnmount(() => {
       justify-content: center;
       width: 100%;
       height: 100%;
-      border-radius: 16px;
+      border-radius: var(--border-radius-xl);
     }
     .expired-overlay {
       cursor: pointer;

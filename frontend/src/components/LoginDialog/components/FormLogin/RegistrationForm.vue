@@ -193,6 +193,6 @@ async function getEmailCode() {
   cursor: pointer;
   background: #409eff;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
 }
 </style>

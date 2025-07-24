@@ -5,20 +5,26 @@
   /* 左侧侧边栏背景色 */
   --sidebar-background-color: #f3f4f6;
 
+  /* 统一圆角设计系统 */
+  --border-radius-xs: 2px;   /* 极小圆角：输入框、分割线 */
+  --border-radius-sm: 4px;   /* 小圆角：标签、徽章 */
+  --border-radius-md: 8px;   /* 中等圆角：按钮、卡片 */
+  --border-radius-lg: 12px;  /* 大圆角：容器、面板 */
+  --border-radius-xl: 16px;  /* 特大圆角：对话框、弹窗 */
+  --border-radius-2xl: 24px; /* 超大圆角：主要容器 */
+  --border-radius-full: 50%; /* 圆形：头像、图标 */
 
   /* 登录弹框变量 */
   --login-dialog-width: 738px;
   --login-dialog-height: 416px;
   --login-dialog-padding: 0px;
   --login-dialog-section-padding: 0px;
-  --login-dialog-border-radius: 24px;
+  --login-dialog-border-radius: var(--border-radius-2xl);
   --login-dialog-mode-toggle-color: #409eff;
   --login-dialog-logo-background: #ffffff;
   --login-dialog-logo-text-color: #191919;
 
-
-
   /* 覆盖 element-plus 样式 */
-  --el-border-radius-base: 12px !important;
-  --el-messagebox-border-radius: 16px !important;
+  --el-border-radius-base: var(--border-radius-lg) !important;
+  --el-messagebox-border-radius: var(--border-radius-xl) !important;
 }

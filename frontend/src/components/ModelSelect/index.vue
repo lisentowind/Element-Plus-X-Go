@@ -105,7 +105,7 @@
     color: var(--el-color-primary, #409eff);
     background-color: var(--sidebar-background-color);
     border: 1px solid var(--el-color-primary, #409eff);
-    border-radius: 10px;
+    border-radius: var(--border-radius-lg);
   }
   .popover-content-box-item.is-select {
     font-weight: 700;
@@ -138,7 +138,7 @@
     }
     &::-webkit-scrollbar-thumb {
       background: #cccccc;
-      border-radius: 4px;
+      border-radius: var(--border-radius-sm);
     }
   }
 </style>

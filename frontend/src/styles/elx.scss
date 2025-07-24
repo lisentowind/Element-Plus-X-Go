@@ -40,5 +40,5 @@
   display: flex;
   align-items: center;
   height: 34px !important;
-  border-radius: 8px !important;
+  border-radius: var(--border-radius-md) !important;
 }

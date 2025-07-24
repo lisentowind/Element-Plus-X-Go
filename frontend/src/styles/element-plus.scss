@@ -16,7 +16,7 @@
 // messagebox 样式
 .is-message-box {
   .el-message-box {
-    border-radius: 16px;
+    border-radius: var(--border-radius-xl);
   }
 }
 
@@ -25,7 +25,7 @@
   display: flex;
   align-items: center;
   height: fit-content;
-  border-radius: 10px !important;
+  border-radius: var(--border-radius-lg) !important;
 }
 
 .rounded-tooltip-enter-from {

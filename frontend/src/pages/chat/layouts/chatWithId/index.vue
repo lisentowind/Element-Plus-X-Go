@@ -295,7 +295,7 @@
               <template #prev-button="{ show, onScrollLeft }">
                 <div
                   v-if="show"
-                  class="prev-next-btn left-8px flex-center w-22px h-22px rounded-8px border-1px border-solid border-[rgba(0,0,0,0.08)] c-[rgba(0,0,0,.4)] hover:bg-#f3f4f6 bg-#fff font-size-10px"
+                  class="prev-next-btn left-8px flex-center w-22px h-22px rounded-lg border-1px border-solid border-[rgba(0,0,0,0.08)] c-[rgba(0,0,0,.4)] hover:bg-#f3f4f6 bg-#fff font-size-10px"
                   @click="onScrollLeft"
                 >
                   <el-icon>
@@ -307,7 +307,7 @@
               <template #next-button="{ show, onScrollRight }">
                 <div
                   v-if="show"
-                  class="prev-next-btn right-8px flex-center w-22px h-22px rounded-8px border-1px border-solid border-[rgba(0,0,0,0.08)] c-[rgba(0,0,0,.4)] hover:bg-#f3f4f6 bg-#fff font-size-10px"
+                  class="prev-next-btn right-8px flex-center w-22px h-22px rounded-lg border-1px border-solid border-[rgba(0,0,0,0.08)] c-[rgba(0,0,0,.4)] hover:bg-#f3f4f6 bg-#fff font-size-10px"
                   @click="onScrollRight"
                 >
                   <el-icon>
@@ -358,7 +358,7 @@
       }
       .el-typewriter {
         overflow: hidden;
-        border-radius: 12px;
+        border-radius: var(--border-radius-lg);
       }
       .user-content {
         // 换行

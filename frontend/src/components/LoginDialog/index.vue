@@ -181,7 +181,7 @@
     height: 40px;
     padding: 4px;
     background: var(--login-dialog-logo-background);
-    border-radius: 12px;
+    border-radius: var(--border-radius-lg);
     box-shadow: 0 2px 12px 0 rgb(0 0 0 / 8%);
     filter: drop-shadow(0 4px 4px rgb(0 0 0 / 10%));
   }

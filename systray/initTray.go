@@ -32,24 +32,16 @@ func showWindow() {
 func onReady() {
 	systray.SetIcon(getIcon())
 	systray.SetTitle("element-ai")
-	systray.SetTooltip("element-ai-app")
+	systray.SetTooltip("单击显示窗口")
 
-	// 创建一个菜单项
+	// 创建菜单项 - 第一个菜单项通常会在左键点击时触发
 	mShow := systray.AddMenuItem("显示窗口", "显示主窗口")
 	mQuit := systray.AddMenuItem("退出", "退出程序")
-
-	// 添加隐藏的默认菜单项（必须作为第一个菜单项）
-	mDefault := systray.AddMenuItem("", "") // 空标题
-	mDefault.Hide()                         // 隐藏但保持存在
 
 	go func() {
 		for {
 			select {
-			case <-mDefault.ClickedCh: // 单击托盘图标触发
-				// 显示主窗口
-				showWindow()
 			case <-mShow.ClickedCh:
-				// 显示主窗口
 				showWindow()
 			case <-mQuit.ClickedCh:
 				systray.Quit()
