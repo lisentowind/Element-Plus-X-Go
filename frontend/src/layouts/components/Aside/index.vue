@@ -1,6 +1,6 @@
 <!-- Aside 侧边栏 -->
 <script setup lang="ts">
-  import type { ConversationItem } from 'vue-element-plus-x/types/Conversations'
+  import type { ConversationItem, ConversationMenuCommand } from 'vue-element-plus-x/types/Conversations'
   import type { ChatSessionVo } from '@/api/session/types'
   import { useRoute, useRouter } from 'vue-router'
   import { get_session } from '@/api'
@@ -9,6 +9,7 @@
   import Collapse from '@/layouts/components/Header/components/Collapse.vue'
   import { useDesignStore } from '@/stores'
   import { useSessionStore } from '@/stores/modules/session'
+  import { Conversations } from 'vue-element-plus-x'
 
   const route = useRoute()
   const router = useRouter()
@@ -62,7 +63,7 @@
   }
 
   // 右键菜单
-  function handleMenuCommand(command: string, item: ConversationItem<ChatSessionVo>) {
+  function handleMenuCommand(command: ConversationMenuCommand, item: ConversationItem<ChatSessionVo>) {
     switch (command) {
       case 'delete':
         ElMessageBox.confirm('删除后，聊天记录将不可恢复。', '确定删除对话？', {
@@ -168,7 +169,7 @@
           <div v-if="conversationsList.length > 0" class="conversations-wrap overflow-hidden">
             <Conversations
               v-model:active="active"
-              :items="conversationsList"
+              :items="conversationsList as any"
               :label-max-width="200"
               :show-tooltip="true"
               :tooltip-offset="60"

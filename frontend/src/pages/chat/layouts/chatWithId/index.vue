@@ -6,7 +6,7 @@
   import type { FilesCardProps } from 'vue-element-plus-x/types/FilesCard'
   import type { ThinkingStatus } from 'vue-element-plus-x/types/Thinking'
   import { useHookFetch } from 'hook-fetch/vue'
-  import { Sender } from 'vue-element-plus-x'
+  import { Attachments, BubbleList, Sender, Thinking, XMarkdown } from 'vue-element-plus-x'
   import { useRoute } from 'vue-router'
   import { send } from '@/api'
   import FilesSelect from '@/components/FilesSelect/index.vue'
@@ -15,6 +15,7 @@
   import { useFilesStore } from '@/stores/modules/files'
   import { useModelStore } from '@/stores/modules/model'
   import { useUserStore } from '@/stores/modules/user'
+  import { ArrowLeftBold, ArrowRightBold } from '@element-plus/icons-vue'
 
   type MessageItem = BubbleProps & {
     key: number
@@ -291,7 +292,7 @@
       >
         <template #header>
           <div class="sender-header p-12px pt-6px pb-0px">
-            <Attachments :items="filesStore.filesList" :hide-upload="true" @delete-card="handleDeleteCard">
+            <Attachments :items="filesStore.filesList as any" :hide-upload="true" @delete-card="handleDeleteCard">
               <template #prev-button="{ show, onScrollLeft }">
                 <div
                   v-if="show"

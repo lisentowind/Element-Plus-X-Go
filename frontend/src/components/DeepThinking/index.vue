@@ -1,15 +1,16 @@
 <!-- 深度思考按钮 -->
 <script setup lang="ts">
-import { useChatStore } from '@/stores/modules/chat';
+  import { useChatStore } from '@/stores/modules/chat'
+  import { ElementPlus } from '@element-plus/icons-vue'
 
-const chatStore = useChatStore();
+  const chatStore = useChatStore()
 
-const isDeepThinking = computed(() => chatStore.isDeepThinking);
+  const isDeepThinking = computed(() => chatStore.isDeepThinking)
 
-// 切换是否深度思考
-function setIsDeepThinking() {
-  chatStore.setDeepThinking(!chatStore.isDeepThinking);
-}
+  // 切换是否深度思考
+  function setIsDeepThinking() {
+    chatStore.setDeepThinking(!chatStore.isDeepThinking)
+  }
 </script>
 
 <template>
@@ -26,9 +27,9 @@ function setIsDeepThinking() {
 </template>
 
 <style scoped lang="scss">
-.deep-thinking-btn.is-select {
-  color: var(--el-color-primary, #409eff);
-  border: 1px solid var(--el-color-primary, #409eff);
-  border-radius: var(--border-radius-xl);
-}
+  .deep-thinking-btn.is-select {
+    color: var(--el-color-primary, #409eff);
+    border: 1px solid var(--el-color-primary, #409eff);
+    border-radius: var(--border-radius-xl);
+  }
 </style>

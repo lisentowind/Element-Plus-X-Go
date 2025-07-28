@@ -1,49 +1,50 @@
 <!-- 默认消息列表页 -->
 <script setup lang="ts">
-import type { FilesCardProps } from 'vue-element-plus-x/types/FilesCard';
-import FilesSelect from '@/components/FilesSelect/index.vue';
-import ModelSelect from '@/components/ModelSelect/index.vue';
-import WelecomeText from '@/components/WelecomeText/index.vue';
-import { useUserStore } from '@/stores';
-import { useFilesStore } from '@/stores/modules/files';
-import { useSessionStore } from '@/stores/modules/session';
+  import type { FilesCardProps } from 'vue-element-plus-x/types/FilesCard'
+  import FilesSelect from '@/components/FilesSelect/index.vue'
+  import ModelSelect from '@/components/ModelSelect/index.vue'
+  import WelecomeText from '@/components/WelecomeText/index.vue'
+  import { useUserStore } from '@/stores'
+  import { useFilesStore } from '@/stores/modules/files'
+  import { useSessionStore } from '@/stores/modules/session'
+  import { Attachments, Sender } from 'vue-element-plus-x'
+  import { ArrowRightBold } from '@element-plus/icons-vue'
 
-const userStore = useUserStore();
-const sessionStore = useSessionStore();
-const filesStore = useFilesStore();
+  const userStore = useUserStore()
+  const sessionStore = useSessionStore()
+  const filesStore = useFilesStore()
 
-const senderValue = ref('');
-const senderRef = ref();
+  const senderValue = ref('')
+  const senderRef = ref()
 
-async function handleSend() {
-  localStorage.setItem('chatContent', senderValue.value);
-  await sessionStore.createSessionList({
-    userId: userStore.userInfo?.userId as number,
-    sessionContent: senderValue.value,
-    sessionTitle: senderValue.value.slice(0, 10),
-    remark: senderValue.value.slice(0, 10),
-  });
-}
+  async function handleSend() {
+    localStorage.setItem('chatContent', senderValue.value)
+    await sessionStore.createSessionList({
+      userId: userStore.userInfo?.userId as number,
+      sessionContent: senderValue.value,
+      sessionTitle: senderValue.value.slice(0, 10),
+      remark: senderValue.value.slice(0, 10)
+    })
+  }
 
-function handleDeleteCard(_item: FilesCardProps, index: number) {
-  filesStore.deleteFileByIndex(index);
-}
+  function handleDeleteCard(_item: FilesCardProps, index: number) {
+    filesStore.deleteFileByIndex(index)
+  }
 
-watch(
-  () => filesStore.filesList.length,
-  (val) => {
-    if (val > 0) {
-      nextTick(() => {
-        senderRef.value.openHeader();
-      });
+  watch(
+    () => filesStore.filesList.length,
+    (val) => {
+      if (val > 0) {
+        nextTick(() => {
+          senderRef.value.openHeader()
+        })
+      } else {
+        nextTick(() => {
+          senderRef.value.closeHeader()
+        })
+      }
     }
-    else {
-      nextTick(() => {
-        senderRef.value.closeHeader();
-      });
-    }
-  },
-);
+  )
 </script>
 
 <template>
@@ -55,7 +56,7 @@ watch(
       class="chat-defaul-sender"
       :auto-size="{
         maxRows: 9,
-        minRows: 3,
+        minRows: 3
       }"
       variant="updown"
       clearable
@@ -64,11 +65,7 @@ watch(
     >
       <template #header>
         <div class="sender-header p-12px pt-6px pb-0px">
-          <Attachments
-            :items="filesStore.filesList"
-            :hide-upload="true"
-            @delete-card="handleDeleteCard"
-          >
+          <Attachments :items="filesStore.filesList as any" :hide-upload="true" @delete-card="handleDeleteCard">
             <template #prev-button="{ show, onScrollLeft }">
               <div
                 v-if="show"
@@ -106,16 +103,16 @@ watch(
 </template>
 
 <style scoped lang="scss">
-.chat-defaul-wrap {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 800px;
-  min-height: 450px;
-  .chat-defaul-sender {
+  .chat-defaul-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
+    max-width: 800px;
+    min-height: 450px;
+    .chat-defaul-sender {
+      width: 100%;
+    }
   }
-}
 </style>
